@@ -13,7 +13,7 @@ Users can explore trending movies, search films by title, and view detailed movi
 
 ## 🛠 Tech Stack
 
-* React.js
+* React.js  
 * Tailwind CSS
 * Framer Motion
 * TMDB API
