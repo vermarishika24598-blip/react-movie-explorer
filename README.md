@@ -26,8 +26,7 @@ Users can explore trending movies, search films by title, and view detailed movi
 ```
 src/
   components/
-  pages/
-  hooks/
+    utils/
   App.jsx
   index.js
 ```
