@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { Link } from "react-router-dom";  // ✅ Add this
+import { Link } from "react-router-dom";  // 
 import trendingmovies from "./utils/Carddata";
 
 export default function Card() {
@@ -86,3 +86,4 @@ export default function Card() {
     </div>
   );
 }
+
