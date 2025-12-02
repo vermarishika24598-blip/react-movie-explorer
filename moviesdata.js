@@ -8,7 +8,7 @@ const API_KEY = "3b17db81e34acbea80c6104012518ad8";
 export default function MovieDetails() {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
-  const [loading, setLoading] = useState(true); // Add loading state for API fetch
+  const [loading, setLoading] = useState(true); 
 
   const featureComingSoon = (e) => {
     e.preventDefault();
@@ -24,7 +24,7 @@ export default function MovieDetails() {
           `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`
         );
         
-        // Handle case where movie ID is not found (404 error)
+        
         if (!response.ok) {
           throw new Error(`Movie not found or API error: ${response.status}`);
         }
@@ -40,7 +40,7 @@ export default function MovieDetails() {
       }
     };
 
-    // Ensure we only fetch if an 'id' is present
+    
     if (id) {
       fetchMovie();
     }
@@ -77,7 +77,7 @@ export default function MovieDetails() {
           className="h-80 w-60 object-cover rounded-xl shadow-2xl ml-20"
         />
 
-        {/* Movie Details */}
+        
         <div className="flex flex-col justify-start gap-4 max-w-3xl ml-20">
           <h1 className="text-3xl font-bold">{movie.title}</h1>
 
@@ -121,3 +121,4 @@ export default function MovieDetails() {
   );
 
 }
+
