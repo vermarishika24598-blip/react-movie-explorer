@@ -9,9 +9,9 @@ export default function Header() {
   const [searchText, setSearchText] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Search movies using TMDB API
+  
   useEffect(() => {
-    // This correctly clears results if the search box is emptied
+  
     if (!searchText.trim()) {
       setMovies([]);
       return;
@@ -51,7 +51,7 @@ export default function Header() {
     <div className="w-full bg-black text-white pb-6">
       <Toaster />
 
-      {/* Header Navigation */}
+    
       <div className="flex flex-col md:flex-row justify-between p-5 gap-4 md:gap-0">
         <nav className="flex items-center gap-5 font-bold text-xl">
           <Link
@@ -83,7 +83,7 @@ export default function Header() {
         </button>
       </div>
 
-      {/* Loading Spinner */}
+    
       {loading && (
         <div className="flex justify-center mt-4 bg-black">
           <div className="animate-spin border-4 border-gray-300 border-t-yellow-400 w-10 h-10 rounded-full"></div>
@@ -126,9 +126,10 @@ export default function Header() {
           </p>
         )
       ) : (
-        null // Show nothing when not loading and search text is empty (initial state)
+        null 
       )}
     </div>
   );
 
 }
+
