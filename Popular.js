@@ -15,7 +15,7 @@ export default function Popular() {
     <div className="bg-black w-full px-6">
       <h1 className="text-white text-3xl font-bold mb-4 p-5">POPULAR</h1>
 
-      {/* FIXED GRID */}
+      
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
         {popular.map((value) => (
           <Link
@@ -47,4 +47,5 @@ export default function Popular() {
     </div>
   );
 }
+
 
