@@ -45,7 +45,7 @@ export default function MovieDetails() {
     }
   }, [id]);
 
-  // Handle Loading and Not Found States
+  
   if (loading) {
     return (
       <div className="flex justify-center bg-black py-20">
@@ -102,7 +102,7 @@ export default function MovieDetails() {
             Rating: ⭐ {movie.vote_average ? movie.vote_average.toFixed(1) : "N/A"}
           </h3>
           
-          {/* Added more details available from the new API call */}
+        
           {movie.release_date && (
               <h3 className="text-md font-medium text-gray-400">
                   Release Date: {movie.release_date}
@@ -120,5 +120,6 @@ export default function MovieDetails() {
   );
 
 }
+
 
 
