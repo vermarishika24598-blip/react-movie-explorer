@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-// We need to re-define the API key here since it was removed
-// from the imports. Use the same key as in your Header component.
+
 const API_KEY = "3b17db81e34acbea80c6104012518ad8"; 
 
 export default function MovieDetails() {
@@ -121,4 +120,5 @@ export default function MovieDetails() {
   );
 
 }
+
 
