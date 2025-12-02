@@ -45,7 +45,7 @@ export default function Card() {
           {movies.map((movie) => (
             <Link
               key={movie.id}
-              to={`/movie/${movie.id}`}  // ✅ Route to movie details
+              to={`/movie/${movie.id}`}  // Route to movie details
               className="w-screen flex-shrink-0 px-6"
             >
               <img
@@ -86,4 +86,5 @@ export default function Card() {
     </div>
   );
 }
+
 
