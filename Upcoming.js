@@ -22,7 +22,7 @@ export default function Upcoming() {
             to={`/movie/${value.id}`}
             className="bg-[#111] rounded-xl overflow-hidden shadow-lg hover:scale-105 transition duration-300"
           >
-            {/* IMAGE FULL WIDTH, SMALL CARD */}
+            
             <img
               src={`https://image.tmdb.org/t/p/w500${value.poster_path}`}
               alt={value.title}
@@ -43,3 +43,4 @@ export default function Upcoming() {
     </div>
   );
 }
+
