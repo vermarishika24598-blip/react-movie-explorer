@@ -19,7 +19,7 @@ export default function MovieDetails() {
     const fetchMovie = async () => {
       setLoading(true);
       try {
-        // ✅ FIX: Use the dedicated TMDB Movie Details API
+        
         const response = await fetch(
           `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`
         );
@@ -119,4 +119,5 @@ export default function MovieDetails() {
       </div>
     </div>
   );
+
 }
