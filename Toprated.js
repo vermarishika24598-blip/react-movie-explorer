@@ -22,14 +22,14 @@ export default function Top() {
             to={`/movie/${value.id}`}
             className="bg-[#111] rounded-xl overflow-hidden shadow-xl hover:scale-105 transition duration-300"
           >
-            {/* IMAGE FULL WIDTH */}
+          
             <img
               src={`https://image.tmdb.org/t/p/w500${value.poster_path}`}
               alt={value.title}
               className="w-full h-48 object-cover"
             />
 
-            {/* TEXT UNDER IMAGE */}
+            
             <div className="p-2 text-white">
               <h2 className="font-semibold truncate">{value.title}</h2>
               <p className="line-clamp-2 text-sm text-gray-300">
@@ -45,3 +45,4 @@ export default function Top() {
     </div>
   );
 }
+
