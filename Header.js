@@ -90,12 +90,8 @@ export default function Header() {
         </div>
       )}
 
-      {/* Movies Grid and Search Feedback */}
-      {/* This is the fixed conditional rendering:
-        1. Only display results if a search has been performed (searchText.trim() is true) AND movies are available.
-        2. If a search was performed but no movies found, show the 'No movies found' message.
-        3. If no search was performed (searchText is empty), show nothing (null). 
-      */}
+      
+      
       {!loading && searchText.trim() ? (
         movies.length > 0 ? (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5 mx-6 mt-4">
@@ -134,4 +130,5 @@ export default function Header() {
       )}
     </div>
   );
+
 }
