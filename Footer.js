@@ -88,7 +88,7 @@ export default function Footer() {
         <FaTwitter size={40}></FaTwitter> 
        </a>
       </div>
-      {/* COPYRIGHT */}
+      
       <p className="text-center mt-10 opacity-60">
         © 2025 IMDB Clone — All Rights Reserved
       </p>
@@ -96,3 +96,4 @@ export default function Footer() {
     </footer>
   );
 }
+
