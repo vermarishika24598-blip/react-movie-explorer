@@ -23,14 +23,14 @@ export default function Popular() {
             to={`/movie/${value.id}`}
             className="bg-[#111] rounded-xl overflow-hidden shadow-xl hover:scale-105 transition duration-300"
           >
-            {/* FIXED IMAGE */}
+          
             <img
               src={value.poster}
               alt={value.title}
               className="w-full h-48 object-cover"
             />
 
-            {/* FIX TEXT UNDER IMAGE */}
+            
             <div className="p-2 text-white">
               <h2 className="font-semibold truncate">{value.title}</h2>
               <p className="line-clamp-2 text-sm text-gray-300">
@@ -47,3 +47,4 @@ export default function Popular() {
     </div>
   );
 }
+
