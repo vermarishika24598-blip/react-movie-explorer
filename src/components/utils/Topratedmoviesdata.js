@@ -1,4 +1,4 @@
-const API_KEY = process.env.API_KEY;
+const API_KEY = process.env.REACT_APP_TMDB_API_KEY;
 const BASE_URL="https://www.themoviedb.org/movie/top-rated";
 const IMAGE_URL="https://media.themoviedb.org/t/p/w440_and_h660_face/9cqNxx0GxF0bflZmeSMuL5tnGzr.jpg";
 

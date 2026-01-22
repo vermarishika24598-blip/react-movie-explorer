@@ -10,7 +10,8 @@ import {
 import { FaHeart, FaRegHeart, FaBookmark, FaRegBookmark } from "react-icons/fa";
 import { toast } from "react-hot-toast";
 
-const API_KEY = process.env.TMDB_API_KEY;
+const API_KEY = process.env.REACT_APP_TMDB_API_KEY;
+
 
 export default function Top() {
   const [topRated, setTopRated] = useState([]);
