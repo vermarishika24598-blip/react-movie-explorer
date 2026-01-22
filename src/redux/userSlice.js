@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-// Async thunk to fetch user info from backend
+// Async thunk to fetch user info
 export const fetchUser = createAsyncThunk(
   "user/fetchUser",
   async (_, thunkAPI) => {
@@ -12,16 +12,45 @@ export const fetchUser = createAsyncThunk(
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
-
       if (!data) throw new Error("Failed to fetch user");
 
-      // normalize: always include `name`
-      const user = {
-        ...data,
-        name: data.name || data.username || "Guest",
-      };
+      return { user: { ...data, name: data.name || data.username || "Guest" }, token };
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
 
-      return { user, token };
+// ✅ Async thunk to update user info (e.g., name)
+export const updateUserBackend = createAsyncThunk(
+  "user/updateUser",
+  async (updatedUser, thunkAPI) => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) throw new Error("No token found");
+
+      const res = await fetch(`https://movie-app-backend-6-qlen.onrender.com/api/auth/me`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(updatedUser),
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.message || "Failed to update user");
+      }
+
+      const data = await res.json();
+      // normalize
+      const user = { ...data, name: data.name || data.username || "Guest" };
+
+      // update localStorage
+      localStorage.setItem("user", JSON.stringify(user));
+
+      return user;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
@@ -42,8 +71,8 @@ try {
 const storedToken = localStorage.getItem("token") || null;
 
 const initialState = {
-  profile: storedUser,
-  token: storedToken,
+  profile: null,
+  token: localStorage.getItem("token"),
   loading: false,
   error: null,
 };
@@ -54,26 +83,22 @@ const userSlice = createSlice({
   reducers: {
     setUser: (state, action) => {
       const { user, token } = action.payload;
-
-      // normalize
-      state.profile = {
-        ...user,
-        name: user.name || user.username || "Guest",
-      };
+      state.profile = { ...user, name: user.name || user.username || "Guest" };
       state.token = token;
 
       localStorage.setItem("user", JSON.stringify(state.profile));
       localStorage.setItem("token", token);
     },
-    logout: (state) => {
-      state.profile = null;
-      state.token = null;
-      localStorage.removeItem("user");
-      localStorage.removeItem("token");
-    },
+   logout: (state) => {
+  state.profile = null;
+  state.token = null;
+  localStorage.removeItem("token");
+},
+
   },
   extraReducers: (builder) => {
     builder
+      // fetchUser
       .addCase(fetchUser.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -89,6 +114,20 @@ const userSlice = createSlice({
       .addCase(fetchUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload || "Failed to fetch user";
+      })
+
+      // updateUserBackend
+      .addCase(updateUserBackend.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateUserBackend.fulfilled, (state, action) => {
+        state.loading = false;
+        state.profile = action.payload;
+      })
+      .addCase(updateUserBackend.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload || "Failed to update user";
       });
   },
 });

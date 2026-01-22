@@ -7,13 +7,14 @@ import {
   removeFromWatchlistBackend
 } from "../redux/MovieSlice";
 
-
 import {
   FaHeart,
   FaRegHeart,
   FaBookmark,
   FaRegBookmark,
 } from "react-icons/fa";
+
+import toast from "react-hot-toast"; // ✅ import toast
 
 export default function MovieCard({ movie }) {
   const dispatch = useDispatch();
@@ -24,6 +25,32 @@ export default function MovieCard({ movie }) {
 
   const isFavourite = favourite.some((m) => m.id === movie.id);
   const isWatchlisted = watchlist.some((m) => m.id === movie.id);
+
+  const handleWatchlist = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (isWatchlisted) {
+      dispatch(removeFromWatchlistBackend(movie));
+      toast.error("Removed from Watchlist!"); // ✅ removed toast
+    } else {
+      dispatch(addToWatchlistBackend(movie));
+      toast.success("Added to Watchlist!"); // ✅ added toast
+    }
+  };
+
+  const handleFavourite = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (isFavourite) {
+      dispatch(removeFromFavlistBackend(movie));
+      toast.error("Removed from Favorites!"); // ✅ removed toast
+    } else {
+      dispatch(addToFavlistBackend(movie));
+      toast.success("Added to Favorites!"); // ✅ added toast
+    }
+  };
 
   return (
     <div className="bg-[#111] rounded-xl overflow-hidden shadow-lg hover:scale-105 transition duration-300">
@@ -54,42 +81,24 @@ export default function MovieCard({ movie }) {
 
       {/* ACTION BUTTONS */}
       <div className="flex justify-between px-3 pb-3">
-      {/* WATCHLIST */}
-<button
-  onClick={(e) => {
-    e.preventDefault();
-    e.stopPropagation();
+        {/* WATCHLIST */}
+        <button onClick={handleWatchlist}>
+          {isWatchlisted ? (
+            <FaBookmark className="text-yellow-400 text-lg" />
+          ) : (
+            <FaRegBookmark className="text-gray-400 hover:text-yellow-400 text-lg" />
+          )}
+        </button>
 
-    isWatchlisted
-      ? dispatch(removeFromWatchlistBackend(movie))
-      : dispatch(addToWatchlistBackend(movie));
-  }}
->
-  {isWatchlisted ? (
-    <FaBookmark className="text-yellow-400 text-lg" />
-  ) : (
-    <FaRegBookmark className="text-gray-400 hover:text-yellow-400 text-lg" />
-  )}
-</button>
-
-{/* FAVOURITE */}
-<button
-  onClick={(e) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    isFavourite
-      ? dispatch(removeFromFavlistBackend(movie))
-      : dispatch(addToFavlistBackend(movie));
-  }}
->
-  {isFavourite ? (
-    <FaHeart className="text-red-500 text-lg" />
-  ) : (
-    <FaRegHeart className="text-gray-400 hover:text-red-500 text-lg" />
-  )}
-</button>
- </div>
+        {/* FAVOURITE */}
+        <button onClick={handleFavourite}>
+          {isFavourite ? (
+            <FaHeart className="text-red-500 text-lg" />
+          ) : (
+            <FaRegHeart className="text-gray-400 hover:text-red-500 text-lg" />
+          )}
+        </button>
+      </div>
     </div>
   );
 }

@@ -10,6 +10,10 @@ import {
   removeFromWatchlistBackend,
 } from "../redux/MovieSlice";
 
+import { toast } from "react-hot-toast";
+
+
+
 
 
 export default function MovieDetails() {
@@ -53,15 +57,31 @@ export default function MovieDetails() {
   const isSaved = watchlist.some((m) => m._id === movie.id || m.id === movie.id);
 
   // Dispatch correct actions
-  const handleFavourite = () =>
-    isLiked
-      ? dispatch(removeFromFavlistBackend(movie._id||movie.id))
-      : dispatch(addToFavlistBackend(movie));
+  const handleWatchlist = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
 
-  const handleWatchlist = () =>
-    isSaved
-      ? dispatch(removeFromWatchlistBackend(movie._id || movie.id))
-      : dispatch(addToWatchlistBackend(movie));
+    if (isSaved) {
+      dispatch(removeFromWatchlistBackend(movie));
+      toast.error("Removed from Watchlist!"); // ✅ removed toast
+    } else {
+      dispatch(addToWatchlistBackend(movie));
+      toast.success("Added to Watchlist!"); // ✅ added toast
+    }
+  };
+  const handleFavourite = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (isLiked) {
+      dispatch(removeFromFavlistBackend(movie));
+      toast.error("Removed from Favorites!"); // ✅ removed toast
+    } else {
+      dispatch(addToFavlistBackend(movie));
+      toast.success("Added to Favorites!"); // ✅ added toast
+    }
+  };
+  
 
   return (
     <div className="bg-black text-white w-full py-10 px-6">

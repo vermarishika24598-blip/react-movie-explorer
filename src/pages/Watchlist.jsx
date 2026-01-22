@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import MovieCard from "../components/MovieCard";
-import { fetchWatchlist } from "../redux/movieSlice";
+import { fetchWatchlist } from "../redux/MovieSlice";
 
 export default function Watchlist() {
   const dispatch = useDispatch();

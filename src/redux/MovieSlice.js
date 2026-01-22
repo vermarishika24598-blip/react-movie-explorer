@@ -1,8 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api/watchlist";
-const FAVLIST_API = "http://localhost:5000/api/favlist";
+const API_URL = "https://movie-app-backend-6-qlen.onrender.com/api/watchlist";
+const FAVLIST_API = "https://movie-app-backend-6-qlen.onrender.com/api/favlist";
+
 
 /* ================= WATCHLIST THUNKS ================= */
 export const fetchWatchlist = createAsyncThunk(

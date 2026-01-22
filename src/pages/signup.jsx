@@ -19,6 +19,7 @@ export default function Signup({setUser}) {
     try {
       await signup({ name, email, password });
       navigate("/profile"); // redirect after signup
+      
     } catch (err) {
       setError(err.message);
     } finally {

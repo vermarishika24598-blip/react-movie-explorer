@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
 import { Toaster } from "react-hot-toast";
 import { AiFillHeart } from "react-icons/ai";
 import { BsBookmarkFill } from "react-icons/bs";
@@ -9,19 +8,12 @@ import { FiLogOut } from "react-icons/fi";
 
 const API_KEY = "3b17db81e34acbea80c6104012518ad8";
 
-function Header() {
+function Header({ user, setUser }) {
   const [movies, setMovies] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const dispatch = useDispatch();
-  const { profile, token } = useSelector((state) => state.user);
-  const isAuthenticated = Boolean(token);
-
-  const { favourite = [], watchlist = [] } = useSelector(
-    (state) => state.movie || {}
-  );
-
+  // Fetch movies for search
   useEffect(() => {
     if (!searchText.trim()) {
       setMovies([]);
@@ -30,31 +22,37 @@ function Header() {
 
     setLoading(true);
     const delay = setTimeout(async () => {
-      const res = await fetch(
-        `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${searchText}`
-      );
-      const data = await res.json();
-      setMovies(data.results || []);
-      setLoading(false);
+      try {
+        const res = await fetch(
+          `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${searchText}`
+        );
+        const data = await res.json();
+        setMovies(data.results || []);
+      } catch (err) {
+        console.error("Search failed:", err);
+      } finally {
+        setLoading(false);
+      }
     }, 500);
 
     return () => clearTimeout(delay);
   }, [searchText]);
 
+  const isAuthenticated = Boolean(user);
+
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    // optionally reset Redux user state here
-    window.location.reload(); // or navigate to login/home
+    localStorage.removeItem("token"); // remove token
+    setUser(null); // update App state immediately
   };
 
   return (
-    <div className="w-full bg-black text-white pb-4">
+    <div className="w-full bg-black text-white pb-4 relative">
       <Toaster />
 
       {/* NAVBAR */}
       <div className="flex flex-col gap-3 p-4 md:flex-row md:items-center md:justify-between">
         {/* LEFT NAV */}
-        <nav className="flex items-center flex-nowrap gap-2 sm:gap-4 text-xs sm:text-sm md:text-lg font-semibold overflow-x-auto">
+        <nav className="flex items-center flex-nowrap gap-2 sm:gap-4 text-xs sm:text-sm md:text-lg font-semibold overflow-x-auto scrollbar-hide">
           {/* LOGO */}
           <Link
             to="/"
@@ -78,8 +76,9 @@ function Header() {
           ) : (
             <>
               {/* Profile */}
-              <Link to="/profile" className="flex items-center gap-1">
+              <Link to="/profile" className="flex items-center gap-2">
                 <FaUser className="text-xl" />
+                <span className="hidden sm:inline">{user?.name}</span>
               </Link>
 
               {/* Logout */}
@@ -114,25 +113,39 @@ function Header() {
         />
       </div>
 
-      {/* SEARCH RESULTS */}
-      {!loading && searchText && (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 px-4">
-          {movies.map((movie) => (
-            <Link key={movie.id} to={`/movie/${movie.id}`}>
-              <div className="bg-gray-800 p-2 rounded hover:scale-105 transition">
-                <img
-                  src={
-                    movie.poster_path
-                      ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                      : "https://via.placeholder.com/300x450"
-                  }
-                  alt={movie.title}
-                  className="h-48 w-full object-cover rounded"
-                />
-                <p className="mt-1 text-sm truncate">{movie.title}</p>
-              </div>
-            </Link>
-          ))}
+      {/* FULL SCREEN SEARCH RESULTS */}
+      {!loading && searchText && movies.length > 0 && (
+        <div className="fixed inset-0 z-50 bg-black bg-opacity-95 overflow-y-auto scrollbar-hide p-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+            {movies.map((movie) => (
+              <Link
+                key={movie.id}
+                to={`/movie/${movie.id}`}
+                onClick={() => setSearchText("")} // clear search results
+              >
+                <div className="bg-gray-800 p-2 rounded hover:scale-105 transition">
+                  <img
+                    src={
+                      movie.poster_path
+                        ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                        : "https://via.placeholder.com/300x450"
+                    }
+                    alt={movie.title}
+                    className="h-48 w-full object-cover rounded"
+                  />
+                  <div className="p-2 text-white">
+                    <h2 className="font-semibold truncate">{movie.title}</h2>
+                    <p className="line-clamp-2 text-sm text-gray-300">
+                      {movie.overview || "No description"}
+                    </p>
+                    <h3 className="text-sm font-semibold mt-1">
+                      ⭐ {movie.vote_average?.toFixed(1) || "N/A"}
+                    </h3>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
       )}
     </div>
