@@ -17,12 +17,12 @@ export default function UserProfile() {
 
   const [activeTab, setActiveTab] = useState("favourites");
 
-  // Always fetch user when component mounts
+  // Fetch user on mount
   useEffect(() => {
     dispatch(fetchUser());
   }, [dispatch]);
 
-  // Fetch watchlist & favourites when profile is available
+  // Fetch watchlist & favourites when profile is loaded
   useEffect(() => {
     if (profile) {
       dispatch(fetchWatchlist());
@@ -37,11 +37,16 @@ export default function UserProfile() {
     navigate("/");
   };
 
-  // Show loading if user not yet loaded
-  if (loading || !profile) {
-    return <div className="text-white p-6">Loading profile...</div>;
+  // ---------- Loading & Profile not found handling ----------
+  if (loading) {
+    return <div className="text-white p-6 text-center">Loading profile...</div>;
   }
 
+  if (!profile) {
+    return <div className="text-white p-6 text-center">⚠️ Profile not found</div>;
+  }
+
+  // ---------- Tabs ----------
   const tabs = [
     { key: "watchlist", label: "Watchlist" },
     { key: "favourites", label: "Favourites" },
@@ -54,18 +59,25 @@ export default function UserProfile() {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 mb-10">
           <div className="flex items-center gap-6">
             <img
-              src=""
+              src={profile.avatar || ""}
               alt="profile"
-              className="w-24 h-24 rounded-full border-2 border-yellow-400"
+              className="w-24 h-24 rounded-full border-2 border-yellow-400 object-cover"
             />
             <div>
-              <h1 className="text-3xl font-bold">{profile.name}</h1>
+              <h1 className="text-3xl font-bold">{profile.name || "Unknown User"}</h1>
               <p className="text-gray-400 text-sm">
-                Joined {profile.createdAt ? new Date(profile.createdAt).toLocaleDateString() : "Unknown"}
+                Joined{" "}
+                {profile.createdAt
+                  ? new Date(profile.createdAt).toLocaleDateString()
+                  : "Unknown"}
               </p>
               <div className="flex gap-6 mt-3 text-sm">
-                <span><strong>{watchlist.length}</strong> Watchlist</span>
-                <span><strong>{favourites.length}</strong> Favourites</span>
+                <span>
+                  <strong>{watchlist.length}</strong> Watchlist
+                </span>
+                <span>
+                  <strong>{favourites.length}</strong> Favourites
+                </span>
               </div>
             </div>
           </div>
@@ -99,33 +111,49 @@ export default function UserProfile() {
 
         {/* Tab content */}
         {activeTab === "favourites" && (
-          favourites.length === 0 ? (
-            <p className="text-gray-400 text-center py-20">❤️ No favourite movies yet</p>
-          ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
-              {favourites.map((movie) => (
-                <MovieCard
-                  key={movie._id || movie.movieId}
-                  movie={{ id: movie.movieId, title: movie.title, poster_path: movie.poster }}
-                />
-              ))}
-            </div>
-          )
+          <>
+            {favourites.length === 0 ? (
+              <p className="text-gray-400 text-center py-20">
+                ❤️ No favourite movies yet
+              </p>
+            ) : (
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+                {favourites.map((movie) => (
+                  <MovieCard
+                    key={movie._id || movie.movieId}
+                    movie={{
+                      id: movie.movieId,
+                      title: movie.title,
+                      poster_path: movie.poster || "",
+                    }}
+                  />
+                ))}
+              </div>
+            )}
+          </>
         )}
 
         {activeTab === "watchlist" && (
-          watchlist.length === 0 ? (
-            <p className="text-gray-400 text-center py-20">🎬 No movies in watchlist</p>
-          ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
-              {watchlist.map((movie) => (
-                <MovieCard
-                  key={movie._id || movie.movieId}
-                  movie={{ id: movie.movieId, title: movie.title, poster_path: movie.poster }}
-                />
-              ))}
-            </div>
-          )
+          <>
+            {watchlist.length === 0 ? (
+              <p className="text-gray-400 text-center py-20">
+                🎬 No movies in watchlist
+              </p>
+            ) : (
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+                {watchlist.map((movie) => (
+                  <MovieCard
+                    key={movie._id || movie.movieId}
+                    movie={{
+                      id: movie.movieId,
+                      title: movie.title,
+                      poster_path: movie.poster || "",
+                    }}
+                  />
+                ))}
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>

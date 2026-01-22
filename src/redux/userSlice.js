@@ -8,7 +8,7 @@ export const fetchUser = createAsyncThunk(
       const token = localStorage.getItem("token");
       if (!token) throw new Error("No token found");
 
-      const res = await fetch("http://localhost:5000/api/auth/me", {
+      const res = await fetch("https://movie-app-backend-6-qlen.onrender.com/api/auth/me", {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();

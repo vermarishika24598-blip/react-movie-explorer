@@ -19,7 +19,7 @@ const genreMap = {
   Horror: 27,
 };
 
-const API_KEY = process.env.REACT_APP_TMDB_API_KEY;
+const API_KEY = process.env.TMDB_API_KEY;
 
 export default function Popular() {
   const [popular, setPopular] = useState([]);
