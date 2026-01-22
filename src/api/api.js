@@ -1,7 +1,8 @@
 import axios from "axios";
 
+// Use environment variable for backend URL
 const API = axios.create({
-  baseURL: "https://movie-app-backend-6-qlen.onrender.com/api",
+  baseURL: process.env.BACKEND_URL || "http://localhost:5000/api",
 });
 
 API.interceptors.request.use((req) => {
