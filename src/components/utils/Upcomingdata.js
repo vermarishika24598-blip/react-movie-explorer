@@ -1,5 +1,5 @@
-const API_KEY = process.env.API_KEY;
-const BASE_URL = "https://api.themoviedb.org/3/movie//upcoming";
+const API_KEY = process.env.REACT_APP_TMDB_API_KEY;
+const BASE_URL = "https://api.themoviedb.org/3/movie/upcoming";
 const IMAGE_URL="https://media.themoviedb.org/t/p/w440_and_h660_face/oJ7g2CifqpStmoYQyaLQgEU32qO.jpg";
  
 export default async function Upcomingmovies() {

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Upcomingmovies from "./utils/Upcomingdata";
-const API_KEY  = process.env.TMDB_API_KEY;
+const API_KEY = process.env.REACT_APP_TMDB_API_KEY;
 import {
   addToFavlistBackend,
   removeFromFavlistBackend,
