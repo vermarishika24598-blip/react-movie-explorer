@@ -106,7 +106,7 @@ export default function Upcoming() {
       <h1 className="text-white font-bold text-3xl p-5">Upcoming</h1>
 
        {/* Genre Filter Buttons */}
-           <div className="flex gap-4 mb-6 overflow-x-auto scrollbar-hide scroll-smooth">
+           <div className="flex gap-4 mb-6 overflow-x-auto scrollbar-hide scroll-smooth bg-black">
   {Object.keys(genreMap).map((genre) => (
     <button
       key={genre}

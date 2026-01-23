@@ -8,7 +8,7 @@ export const fetchUser = createAsyncThunk(
       const token = localStorage.getItem("token");
       if (!token) throw new Error("No token found");
 
-      const res = await fetch("https://movie-app-backend-6-qlen.onrender.com/api/auth/me", {
+      const res = await fetch("https://movie-app-backend-5-dxa1.onrender.com/api/auth/me", {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -29,7 +29,7 @@ export const updateUserBackend = createAsyncThunk(
       const token = localStorage.getItem("token");
       if (!token) throw new Error("No token found");
 
-      const res = await fetch(`https://movie-app-backend-6-qlen.onrender.com/api/auth/me`, {
+      const res = await fetch(`https://movie-app-backend-5-dxa1.onrender.com/api/auth/me`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

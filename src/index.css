@@ -2,6 +2,7 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-
-
-
+/* Global background for the whole site */
+body {
+  @apply bg-white text-black min-h-screen;
+}

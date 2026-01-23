@@ -1,4 +1,4 @@
-const API_KEY=process.env.TMDB_API_KEY
+const API_KEY=process.env.REACT_APP_TMDB_API_KEY
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { FaRegHeart, FaHeart, FaRegBookmark, FaBookmark } from "react-icons/fa";
