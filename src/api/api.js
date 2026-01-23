@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Use environment variable for backend URL
 const API = axios.create({
-  baseURL: import.meta.env.REACT_APP_BACKEND_URL 
+  baseURL: process.env.REACT_APP_BACKEND_URL,
 });
 
 API.interceptors.request.use((req) => {
