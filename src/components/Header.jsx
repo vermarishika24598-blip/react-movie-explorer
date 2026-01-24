@@ -53,10 +53,11 @@ function Header({ user, setUser }) {
       <div className="flex flex-col gap-3 p-4 md:flex-row md:items-center md:justify-between">
         {/* LEFT NAV */}
         <nav className="flex items-center flex-nowrap gap-2 sm:gap-4 text-xs sm:text-sm md:text-lg font-semibold overflow-x-auto scrollbar-hide">
-          {/* LOGO */}
+          {/* LOGO with outline/glow */}
           <Link
             to="/"
-            className="bg-amber-500 text-black rounded-md px-2 py-1 sm:px-4 sm:py-2 text-xs sm:text-base"
+            className="bg-amber-500 text-black rounded-md px-2 py-1 sm:px-4 sm:py-2 text-xs sm:text-base
+                       font-bold shadow-md ring-2 ring-amber-400 hover:ring-amber-500 transition-all duration-300"
           >
             IMDB
           </Link>
@@ -69,7 +70,7 @@ function Header({ user, setUser }) {
           {!isAuthenticated ? (
             <Link
               to="/login"
-              className="flex items-center gap-1 px-2 py-1 rounded"
+              className="flex items-center gap-1 px-2 py-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition"
             >
               Sign In
             </Link>
@@ -106,7 +107,7 @@ function Header({ user, setUser }) {
         {/* SEARCH */}
         <input
           type="text"
-          className="w-full md:w-80 rounded-lg p-2 text-sm text-black"
+          className="w-full md:w-80 rounded-lg p-2 text-sm text-black border border-gray-300 focus:outline-none focus:ring-2 focus:ring-amber-400 transition"
           placeholder="Search movies 🎬"
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
