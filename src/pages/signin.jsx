@@ -35,7 +35,7 @@ export default function Login({setUser}) {
         onSubmit={handleSubmit}
         className="bg-gray-900 p-8 rounded-lg w-96"
       >
-        <h2 className="text-black text-2xl font-bold mb-6 text-center">
+        <h2 className="text-white text-2xl font-bold mb-6 text-center">
           Login
         </h2>
 
