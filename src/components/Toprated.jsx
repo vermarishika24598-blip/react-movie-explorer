@@ -47,7 +47,6 @@ export default function Top() {
         toast.error("Failed to fetch movies");
       }
     };
-
     fetchMovies();
   }, [selectedGenre]);
 
@@ -75,18 +74,16 @@ export default function Top() {
   };
 
   return (
-    <div className="bg-gray-900 w-full px-4 py-5 min-h-screen">
-      <h1 className="text-3xl md:text-4xl font-bold text-white mb-6 px-2 md:px-6">TOP RATED</h1>
-
+    <div className="w-full px-4 pt-4 bg-white min-h-screen">
       {/* Genre Filter */}
-      <div className="flex gap-4 mb-6 overflow-x-auto scrollbar-hide scroll-smooth px-2 md:px-6 snap-x snap-mandatory">
+      <div className="flex gap-4 mb-6 overflow-x-auto scrollbar-hide scroll-smooth bg-gray-100 dark:bg-gray-900 p-2 rounded-md">
         {Object.keys(genreMap).map((genre) => (
           <button
             key={genre}
-            className={`px-4 py-2 rounded-md font-semibold snap-center transition-shadow duration-300 ${
+            className={`px-4 py-2 rounded-md font-semibold transition ${
               selectedGenre === genre
-                ? "bg-yellow-400 text-black shadow-lg"
-                : "bg-gray-800 text-white hover:bg-gray-700 shadow-sm"
+                ? "bg-yellow-400 text-black"
+                : "bg-gray-300 dark:bg-gray-800 text-gray-900 dark:text-white hover:bg-gray-400 dark:hover:bg-gray-700"
             }`}
             onClick={() => setSelectedGenre(genre)}
           >
@@ -96,7 +93,7 @@ export default function Top() {
 
         {selectedGenre && (
           <button
-            className="px-4 py-2 rounded-md bg-red-600 text-white hover:bg-red-700 shadow-md transition-colors duration-300"
+            className="px-4 py-2 rounded-md bg-red-600 text-white hover:bg-red-700"
             onClick={() => setSelectedGenre(null)}
           >
             All Genres
@@ -104,19 +101,13 @@ export default function Top() {
         )}
       </div>
 
-      {/* Movie Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 px-2 md:px-6">
-        {topRated.length === 0 && (
-          <p className="text-gray-400 text-center col-span-full py-10">
-            No movies found 😔
-          </p>
-        )}
-
+      {/* Movies Grid */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
         {topRated.map((movie) => (
           <div
             key={movie.id}
             onClick={() => navigate(`/movie/${movie.id}`)}
-            className="bg-gray-800 dark:bg-[#111] rounded-xl overflow-hidden shadow-xl hover:shadow-2xl hover:scale-105 transform transition-all duration-300 cursor-pointer"
+            className="bg-gray-100 dark:bg-[#111] rounded-xl overflow-hidden shadow-lg hover:scale-105 transition duration-300 cursor-pointer"
           >
             <img
               src={
@@ -125,44 +116,46 @@ export default function Top() {
                   : "https://via.placeholder.com/500x750?text=No+Image"
               }
               alt={movie.title}
-              className="w-full h-52 sm:h-60 md:h-72 object-cover transition-transform duration-300 hover:scale-110"
+              className="w-full h-48 object-cover"
             />
 
-            <div className="p-3 text-white">
-              <h2 className="font-semibold text-sm md:text-base truncate">{movie.title}</h2>
-              <p className="line-clamp-3 text-gray-300 text-xs md:text-sm mt-1">{movie.overview}</p>
-              <h3 className="text-sm md:text-base font-semibold mt-2">
+            <div className="p-2">
+              <h1 className="text-sm font-semibold truncate text-gray-900 dark:text-white">
+                {movie.title}
+              </h1>
+              <p className="text-xs text-gray-700 dark:text-gray-400 line-clamp-2">
+                {movie.overview}
+              </p>
+              <p className="text-xs mt-1 text-gray-900 dark:text-white">
                 ⭐ {movie.vote_average?.toFixed(1) || "N/A"}
-              </h3>
+              </p>
             </div>
 
             {/* Action Buttons */}
-            <div className="flex justify-between p-2 bg-gray-900">
+            <div className="flex justify-between p-2">
               <button
-                className="p-1 rounded-full hover:bg-gray-700 transition"
                 onClick={(e) => {
                   e.stopPropagation();
                   handleWatchlistToggle(movie);
                 }}
               >
                 {isWatchlisted(movie.id) ? (
-                  <FaBookmark className="text-yellow-400 h-5 w-5" />
+                  <FaBookmark className="text-yellow-400 h-5" />
                 ) : (
-                  <FaRegBookmark className="text-gray-400 h-5 w-5" />
+                  <FaRegBookmark className="text-gray-400 dark:text-gray-300 h-5" />
                 )}
               </button>
 
               <button
-                className="p-1 rounded-full hover:bg-gray-700 transition"
                 onClick={(e) => {
                   e.stopPropagation();
                   handleFavouriteToggle(movie);
                 }}
               >
                 {isFavourite(movie.id) ? (
-                  <FaHeart className="text-red-500 h-5 w-5" />
+                  <FaHeart className="text-red-500 h-5" />
                 ) : (
-                  <FaRegHeart className="text-gray-400 h-5 w-5" />
+                  <FaRegHeart className="text-gray-400 dark:text-gray-300 h-5" />
                 )}
               </button>
             </div>
