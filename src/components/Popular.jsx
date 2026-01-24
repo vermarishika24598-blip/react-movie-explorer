@@ -82,7 +82,7 @@ export default function Popular() {
   }, [selectedGenre]);
 
   return (
-    <div className="bg-black w-full px-6 py-5">
+    <div className="bg-white w-full px-6 py-5">
       <h1 className="text-white text-3xl font-bold mb-4">POPULAR</h1>
 
       {/* Genre filter */}
