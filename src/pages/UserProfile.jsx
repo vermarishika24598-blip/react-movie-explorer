@@ -85,14 +85,6 @@ export default function UserProfile() {
               </div>
             </div>
           </div>
-
-          <button
-            onClick={handleLogout}
-            className="p-2 rounded-full hover:bg-gray-700 transition text-white"
-            title="Logout"
-          >
-            Logout
-          </button>
         </div>
 
         <div className="flex gap-6 border-b border-gray-700 mb-6">
