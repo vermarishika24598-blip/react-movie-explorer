@@ -115,7 +115,7 @@ export default function Popular() {
         {popular.map((movie) => (
           <div
             key={movie.id}
-             onClick={() => navigate(`/movie/${movie.id}`)}
+            onClick={() => navigate(`/movie/${movie.id}`)}
             className="bg-gray-100 dark:bg-[#111] rounded-xl overflow-hidden shadow-lg hover:scale-105 transition duration-300 cursor-pointer"
           >
             <img
