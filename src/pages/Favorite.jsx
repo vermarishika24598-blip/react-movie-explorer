@@ -21,6 +21,14 @@ export default function Favorite() {
     );
   }
 
+  if (! favourite.length) {
+    return (
+      <div className="bg-black text-white text-center py-20 text-xl">
+         Your Favouritelist  is empty
+      </div>
+    );
+  }
+
   
 
   return (
