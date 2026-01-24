@@ -41,19 +41,19 @@ function Header({ user, setUser }) {
   const isAuthenticated = Boolean(user);
 
   const handleLogout = () => {
-    localStorage.removeItem("token"); // remove token
-    setUser(null); // update App state immediately
+    localStorage.removeItem("token");
+    setUser(null);
   };
 
   return (
-    <div className="w-full bg-white text-black pb-4 relative">
+    <div className="w-full bg-white text-black pb-4 relative shadow-lg z-50">
       <Toaster />
 
       {/* NAVBAR */}
       <div className="flex flex-col gap-3 p-4 md:flex-row md:items-center md:justify-between">
         {/* LEFT NAV */}
         <nav className="flex items-center flex-nowrap gap-2 sm:gap-4 text-xs sm:text-sm md:text-lg font-semibold overflow-x-auto scrollbar-hide">
-          {/* LOGO with outline/glow */}
+          {/* LOGO with outline */}
           <Link
             to="/"
             className="bg-amber-500 text-black rounded-md px-2 py-1 sm:px-4 sm:py-2 text-xs sm:text-base
@@ -76,13 +76,11 @@ function Header({ user, setUser }) {
             </Link>
           ) : (
             <>
-              {/* Profile */}
               <Link to="/profile" className="flex items-center gap-2">
                 <FaUser className="text-xl" />
                 <span className="hidden sm:inline">{user?.name}</span>
               </Link>
 
-              {/* Logout */}
               <button
                 onClick={handleLogout}
                 className="p-2 rounded-full hover:bg-gray-700 transition"
@@ -122,7 +120,7 @@ function Header({ user, setUser }) {
               <Link
                 key={movie.id}
                 to={`/movie/${movie.id}`}
-                onClick={() => setSearchText("")} // clear search results
+                onClick={() => setSearchText("")}
               >
                 <div className="bg-gray-800 p-2 rounded hover:scale-105 transition">
                   <img
