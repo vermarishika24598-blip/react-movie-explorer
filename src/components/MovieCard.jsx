@@ -53,7 +53,7 @@ export default function MovieCard({ movie }) {
   };
 
   return (
-    <div className="bg-[#111] rounded-xl overflow-hidden shadow-lg hover:scale-105 transition duration-300">
+    <div className="bg-white rounded-xl overflow-hidden shadow-lg hover:scale-105 transition duration-300">
       {/* CLICKABLE AREA */}
       <Link to={`/movie/${movie.id}`}>
         <img
@@ -66,10 +66,10 @@ export default function MovieCard({ movie }) {
           className="w-full h-48 object-cover"
         />
 
-        <div className="p-2 text-white">
+        <div className="p-2 text-black">
           <h2 className="font-semibold text-sm truncate">{movie.title}</h2>
 
-          <p className="text-xs text-gray-400 line-clamp-2">
+          <p className="text-xs text-black line-clamp-2">
             {movie.overview}
           </p>
 
