@@ -21,7 +21,7 @@ export default function Card() {
 
   if (!movies.length)
     return (
-      <div className="flex justify-center  bg-black ">
+      <div className="flex justify-center  bg-white ">
         <div className="animate-spin border-4 border-gray-300 border-t-yellow-400 w-10 h-10 rounded-full" />
       </div>
     );
@@ -35,7 +35,7 @@ export default function Card() {
   };
 
   return (
-    <div className="w-full overflow-hidden py-6 bg-black relative mt-0">
+    <div className="w-full overflow-hidden py-6 bg-white relative mt-0">
       <div className="relative w-full">
         <div
           ref={trackRef}
