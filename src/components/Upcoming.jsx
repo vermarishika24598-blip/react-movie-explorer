@@ -83,7 +83,7 @@ export default function Upcoming() {
   };
 
   return (
-    <div className="w-full px-4 pt-4 bg-white min-h-screen">
+    <div className="w-full px-4 pt-4 bg-black min-h-screen">
       {/* Genre Filter Buttons */}
       <div className="flex gap-4 mb-6 overflow-x-auto scrollbar-hide scroll-smooth bg-gray-100 dark:bg-gray-900 p-2 rounded-md">
         {Object.keys(genreMap).map((genre) => (
