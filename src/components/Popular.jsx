@@ -10,6 +10,7 @@ import {
 } from "../redux/MovieSlice";
 import { toast } from "react-hot-toast";
 import Popularmovies from "./utils/popularcard";
+import { useNavigate } from "react-router-dom";
 
 const genreMap = {
   Action: 28,
