@@ -32,8 +32,8 @@ export default function Favorite() {
   
 
   return (
-    <div className="bg-black min-h-screen px-6 py-8">
-      <h1 className="text-white text-2xl font-bold mb-6">
+    <div className="bg-white min-h-screen px-6 py-8">
+      <h1 className="text-black text-2xl font-bold mb-6">
         Favorite Movies
       </h1>
 
