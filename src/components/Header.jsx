@@ -46,7 +46,7 @@ function Header({ user, setUser }) {
   };
 
   return (
-    <div className="w-full bg-black text-white pb-4 relative">
+    <div className="w-full bg-white text-black pb-4 relative">
       <Toaster />
 
       {/* NAVBAR */}
