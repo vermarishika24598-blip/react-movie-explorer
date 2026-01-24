@@ -82,48 +82,49 @@ export default function Popular() {
   }, [selectedGenre]);
 
   return (
-    <div className="w-full px-4 pt-4 bg-white min-h-screen">
-      {/* Genre Filter Buttons */}
-      <div className="flex gap-4 mb-6 overflow-x-auto scrollbar-hide scroll-smooth bg-gray-100 dark:bg-gray-900 p-2 rounded-md">
-        {Object.keys(genreMap).map((genre) => (
-          <button
-            key={genre}
-            className={`px-4 py-2 rounded-md font-semibold transition ${
-              selectedGenre === genre
-                ? "bg-yellow-400 text-black"
-                : "bg-gray-300 dark:bg-gray-800 text-gray-900 dark:text-white hover:bg-gray-400 dark:hover:bg-gray-700"
-            }`}
-            onClick={() => setSelectedGenre(genre)}
-          >
-            {genre}
-          </button>
-        ))}
+     <div className="w-full px-4 pt-4 bg-white min-h-screen">
 
-        {selectedGenre && (
-          <button
-            className="px-4 py-2 rounded-md bg-red-600 text-white hover:bg-red-700"
-            onClick={() => setSelectedGenre(null)}
-          >
-            All Genres
-          </button>
-        )}
-      </div>
+      {/* Genre filter */}
+        <div className="flex gap-4 mb-6 overflow-x-auto scrollbar-hide scroll-smooth bg-gray-100 dark:bg-gray-900 p-2 rounded-md">
+  {Object.keys(genreMap).map((genre) => (
+    <button
+      key={genre}
+      className={`px-4 py-2 rounded-md font-semibold ${
+        selectedGenre === genre
+          ? ""bg-yellow-400 text-black"
+          : "bg-gray-300 dark:bg-gray-800 text-gray-900 dark:text-white hover:bg-gray-400 dark:hover:bg-gray-700"
+      }`}
+      onClick={() => setSelectedGenre(genre)}
+    >
+      {genre}
+    </button>
+  ))}
 
-      {/* Movies Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+  {selectedGenre && (
+    <button
+      className="px-4 py-2 rounded-md bg-red-600 text-white hover:bg-red-700"
+      onClick={() => setSelectedGenre(null)}
+    >
+      All genre
+    </button>
+  )}
+</div>
+
+      {/* Movies grid */}
+      <div className="rid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
         {popular.map((movie) => (
           <div
             key={movie.id}
-             to={`/movie/${movie.id}`}
+            onClick={() => navigate(`/movie/${movie.id}`)}
             className="bg-gray-100 dark:bg-[#111] rounded-xl overflow-hidden shadow-lg hover:scale-105 transition duration-300 cursor-pointer"
           >
             <img
-              src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+              src={movie.poster_path || movie.poster}
               alt={movie.title}
               className="w-full h-48 object-cover"
             />
 
-            <div className="p-2">
+             <div className="p-2">
               <h1 className="text-sm font-semibold truncate text-gray-900 dark:text-white">
                 {movie.title}
               </h1>
@@ -169,5 +170,5 @@ export default function Popular() {
         ))}
       </div>
     </div>
-      );
+  );
 }
