@@ -79,7 +79,7 @@ export default function Top() {
   };
 
   return (
-    <div className="bg-black w-full px-4 pt-5">
+    <div className="bg-white w-full px-4 pt-5">
       <h1 className="text-white text-3xl font-bold p-5">TOP RATED</h1>
 
         <div className="flex gap-4 mb-6 overflow-x-auto scrollbar-hide scroll-smooth">
