@@ -15,7 +15,7 @@ export default function Favorite() {
 
   if (status === "loading") {
     return (
-      <div className="bg-black text-white text-center py-20 text-xl">
+      <div className="bg-white text-black text-center py-20 text-xl">
         ⏳ Loading your favorite list...
       </div>
     );
@@ -23,7 +23,7 @@ export default function Favorite() {
 
   if (! favourite.length) {
     return (
-      <div className="bg-black text-white text-center py-20 text-xl">
+      <div className="bg-white text-black text-center py-20 text-xl">
          Your Favouritelist  is empty
       </div>
     );
