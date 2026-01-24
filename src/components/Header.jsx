@@ -114,7 +114,7 @@ function Header({ user, setUser }) {
 
       {/* FULL SCREEN SEARCH RESULTS */}
       {!loading && searchText && movies.length > 0 && (
-        <div className="fixed inset-0 z-50 bg-black bg-opacity-95 overflow-y-auto scrollbar-hide p-4">
+        <div className="fixed inset-0 z-50 bg--white bg-opacity-95 overflow-y-auto scrollbar-hide p-4">
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
             {movies.map((movie) => (
               <Link
@@ -122,7 +122,7 @@ function Header({ user, setUser }) {
                 to={`/movie/${movie.id}`}
                 onClick={() => setSearchText("")}
               >
-                <div className="bg-gray-800 p-2 rounded hover:scale-105 transition">
+                <div className="bg-white p-2 rounded hover:scale-105 transition">
                   <img
                     src={
                       movie.poster_path
@@ -134,7 +134,7 @@ function Header({ user, setUser }) {
                   />
                   <div className="p-2 text-white">
                     <h2 className="font-semibold truncate">{movie.title}</h2>
-                    <p className="line-clamp-2 text-sm text-gray-300">
+                    <p className="line-clamp-2 text-sm text-black ">
                       {movie.overview || "No description"}
                     </p>
                     <h3 className="text-sm font-semibold mt-1">
