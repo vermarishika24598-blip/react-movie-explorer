@@ -33,7 +33,7 @@ export default function UserProfile() {
     navigate("/");
   };
 
-  if (loading) return <div className="text-white p-6 text-center">Loading profile...</div>;
+  if (loading) return <div className="text-white p-6 text-center bg-black ">Loading profile...</div>;
   if (!profile) return <div className="text-white p-6 text-center">⚠️ Profile not found</div>;
 
   const tabs = [
