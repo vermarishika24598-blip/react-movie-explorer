@@ -2,13 +2,15 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
 
-function Footer({ user }) {
+function Footer() {
   return (
     <footer className="bg-black text-white pt-16 pb-8 px-6">
+      {/* Title */}
       <h2 className="text-center text-3xl font-bold mb-12">
         Movie Platform
       </h2>
 
+      {/* Footer Content */}
       <div className="max-w-5xl mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8 text-sm">
 
         {/* Movies */}
@@ -22,22 +24,13 @@ function Footer({ user }) {
           </ul>
         </div>
 
-        {/* Account (Auth-aware) */}
+        {/* Account */}
         <div>
           <h3 className="font-semibold mb-3">Account</h3>
           <ul className="space-y-2 opacity-80">
-            {!user ? (
-              <>
-                <li><Link to="/login" className="hover:text-amber-500">Login</Link></li>
-                <li><Link to="/signup" className="hover:text-amber-500">Sign Up</Link></li>
-              </>
-            ) : (
-              <>
-                <li><Link to="/profile" className="hover:text-amber-500">Profile</Link></li>
-                <li><Link to="/watchlist" className="hover:text-amber-500">Watchlist</Link></li>
-                <li><Link to="/favourites" className="hover:text-amber-500">Favourites</Link></li>
-              </>
-            )}
+            <li><Link to="/profile" className="hover:text-amber-500">Profile</Link></li>
+            <li><Link to="/watchlist" className="hover:text-amber-500">Watchlist</Link></li>
+            <li><Link to="/favourites" className="hover:text-amber-500">Favourites</Link></li>
           </ul>
         </div>
 
@@ -85,21 +78,26 @@ function Footer({ user }) {
                 LinkedIn
               </a>
             </li>
+            <li>
+              <a
+                href="https://x.com/RishikaVer19716"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-amber-500"
+              >
+                Twitter (X)
+              </a>
+            </li>
           </ul>
         </div>
       </div>
 
-      {/* Icons */}
-      <div className="flex justify-center gap-6 mt-12">
-        <FaLinkedin size={32} />
-        <FaGithub size={32} />
-        <FaTwitter size={32} />
-      </div>
-
+      {/* Disclaimer */}
       <p className="text-center mt-8 text-xs opacity-50">
-        Full-stack movie app built with React, Node.js, Express & MongoDB.
+        This is a personal full-stack project built for learning purposes and uses the TMDB API.
       </p>
 
+      {/* Copyright */}
       <p className="text-center mt-3 opacity-60 text-sm">
         © 2025 — Built by Rishika Verma
       </p>
