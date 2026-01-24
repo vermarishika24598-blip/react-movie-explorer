@@ -15,7 +15,7 @@ export default function Watchlist() {
 
   if (status === "loading") {
     return (
-      <div className="bg-black text-white text-center py-20 text-xl">
+      <div className="bg-white text-black text-center py-20 text-xl">
         ⏳ Loading your watchlist...
       </div>
     );
@@ -23,15 +23,15 @@ export default function Watchlist() {
 
   if (!watchlist.length) {
     return (
-      <div className="bg-black text-white text-center py-20 text-xl">
+      <div className="bg-white text-black text-center py-20 text-xl">
         📌 Your watchlist is empty
       </div>
     );
   }
 
   return (
-    <div className="bg-black min-h-screen px-6 py-8">
-      <h1 className="text-white text-2xl font-bold mb-6">
+    <div className="bg-white min-h-screen px-6 py-8">
+      <h1 className="text-black text-2xl font-bold mb-6">
         📌 Watchlist Movies
       </h1>
 
