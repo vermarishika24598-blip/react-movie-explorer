@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Upcomingmovies from "./utils/Upcomingdata";
-import ThemeToggle from "../components/ThemeToggle"; // Theme toggle
 const API_KEY = process.env.REACT_APP_TMDB_API_KEY;
 
 import {
@@ -85,9 +84,6 @@ export default function Upcoming() {
 
   return (
     <div className="w-full px-4 pt-4 bg-white dark:bg-black min-h-screen">
-      {/* Header + Theme Toggle */}
-      
-
       {/* Genre Filter Buttons */}
       <div className="flex gap-4 mb-6 overflow-x-auto scrollbar-hide scroll-smooth bg-gray-100 dark:bg-gray-900 p-2 rounded-md">
         {Object.keys(genreMap).map((genre) => (
