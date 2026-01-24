@@ -86,12 +86,7 @@ export default function Upcoming() {
   return (
     <div className="w-full px-4 pt-4 bg-white dark:bg-black min-h-screen">
       {/* Header + Theme Toggle */}
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white p-5">
-          Upcoming
-        </h1>
-        <ThemeToggle />
-      </div>
+      
 
       {/* Genre Filter Buttons */}
       <div className="flex gap-4 mb-6 overflow-x-auto scrollbar-hide scroll-smooth bg-gray-100 dark:bg-gray-900 p-2 rounded-md">
