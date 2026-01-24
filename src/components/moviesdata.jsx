@@ -100,7 +100,7 @@ export default function MovieDetails() {
           <h3 className="text-lg font-semibold text-yellow-400">
             ⭐ {movie.vote_average?.toFixed(1) || "N/A"}
           </h3>
-          <div className="space-y-1 text-gray-300">
+          <div className="space-y-1 text-white">
             {movie.release_date && (
               <p>
                 <span className="font-bold text-white">Release:</span>{" "}
