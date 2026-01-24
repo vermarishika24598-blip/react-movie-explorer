@@ -84,7 +84,7 @@ export default function MovieDetails() {
   
 
   return (
-    <div className="bg-black text-white w-full py-10 px-6">
+    <div className="bg-white text-black  w-full py-10 px-6">
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-10">
         <img
           src={
@@ -109,12 +109,12 @@ export default function MovieDetails() {
             )}
             {movie.runtime && (
               <p>
-                <span className="font-bold text-white">Runtime:</span>{" "}
+                <span className="font-bold text-black">Runtime:</span>{" "}
                 {movie.runtime} mins
               </p>
             )}
           </div>
-          <p className="text-gray-200 leading-relaxed mt-3">{movie.overview}</p>
+          <p className="text-black leading-relaxed mt-3">{movie.overview}</p>
           <div className="flex gap-4 mt-4 text-xl sm:text-3xl">
             <button onClick={handleWatchlist}>
               {isSaved ? (
