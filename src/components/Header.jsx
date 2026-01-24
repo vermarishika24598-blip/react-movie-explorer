@@ -83,7 +83,7 @@ function Header({ user, setUser }) {
 
               <button
                 onClick={handleLogout}
-                className="p-2 rounded-full hover:bg-gray-700 transition"
+                className="p-2 rounded-full bg-black transition"
                 title="Logout"
               >
                 <FiLogOut className="text-white w-6 h-6" />
