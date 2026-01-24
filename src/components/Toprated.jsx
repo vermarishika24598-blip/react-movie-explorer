@@ -79,69 +79,62 @@ export default function Top() {
   };
 
   return (
-    <div className="bg-white w-full px-4 pt-5">
-      <h1 className="text-white text-3xl font-bold p-5">TOP RATED</h1>
+    <div className="w-full px-4 pt-4 bg-black min-h-screen">
+      {/* Genre Filter Buttons */}
+      <div className="flex gap-4 mb-6 overflow-x-auto scrollbar-hide scroll-smooth bg-gray-100 dark:bg-gray-900 p-2 rounded-md">
+        {Object.keys(genreMap).map((genre) => (
+          <button
+            key={genre}
+            className={`px-4 py-2 rounded-md font-semibold transition ${
+              selectedGenre === genre
+                ? "bg-yellow-400 text-black"
+                : "bg-gray-300 dark:bg-gray-800 text-gray-900 dark:text-white hover:bg-gray-400 dark:hover:bg-gray-700"
+            }`}
+            onClick={() => setSelectedGenre(genre)}
+          >
+            {genre}
+          </button>
+        ))}
 
-        <div className="flex gap-4 mb-6 overflow-x-auto scrollbar-hide scroll-smooth">
-  {Object.keys(genreMap).map((genre) => (
-    <button
-      key={genre}
-      className={`px-4 py-2 rounded-md font-semibold ${
-        selectedGenre === genre
-          ? "bg-yellow-400 text-black"
-          : "bg-gray-800 text-white hover:bg-gray-700"
-      }`}
-      onClick={() => setSelectedGenre(genre)}
-    >
-      {genre}
-    </button>
-  ))}
-
-  {selectedGenre && (
-    <button
-      className="px-4 py-2 rounded-md bg-red-600 text-white hover:bg-red-700"
-      onClick={() => setSelectedGenre(null)}
-    >
-      All genre
-    </button>
-  )}
-</div> 
-
-
-      {/* Movie Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 px-6">
-        {topRated.length === 0 && (
-          <p className="text-gray-400 text-center col-span-full py-10">
-            No movies found 😔
-          </p>
+        {selectedGenre && (
+          <button
+            className="px-4 py-2 rounded-md bg-red-600 text-white hover:bg-red-700"
+            onClick={() => setSelectedGenre(null)}
+          >
+            All Genres
+          </button>
         )}
+      </div>
 
+      {/* Movies Grid */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
         {topRated.map((movie) => (
           <div
             key={movie.id}
             onClick={() => navigate(`/movie/${movie.id}`)}
-            className="bg-[#111] rounded-xl overflow-hidden shadow-xl hover:scale-105 transition duration-300 cursor-pointer"
+            className="bg-gray-100 dark:bg-[#111] rounded-xl overflow-hidden shadow-lg hover:scale-105 transition duration-300 cursor-pointer"
           >
             <img
-              src={
-                movie.poster_path
-                  ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                  : "https://via.placeholder.com/500x750?text=No+Image"
-              }
+              src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
               alt={movie.title}
               className="w-full h-48 object-cover"
             />
 
-            <div className="p-2 text-white">
-              <h2 className="font-semibold truncate">{movie.title}</h2>
-              <p className="line-clamp-2 text-sm text-gray-300">{movie.overview}</p>
-              <h3 className="text-sm font-semibold mt-1">
+            <div className="p-2">
+              <h1 className="text-sm font-semibold truncate text-gray-900 dark:text-white">
+                {movie.title}
+              </h1>
+              <p className="text-xs text-gray-700 dark:text-gray-400 line-clamp-2">
+                {movie.overview}
+              </p>
+              <p className="text-xs mt-1 text-gray-900 dark:text-white">
                 ⭐ {movie.vote_average?.toFixed(1) || "N/A"}
-              </h3>
+              </p>
             </div>
 
+            {/* Action Buttons */}
             <div className="flex justify-between p-2">
-              {/* WATCHLIST */}
+              {/* Watchlist */}
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -151,11 +144,11 @@ export default function Top() {
                 {isWatchlisted(movie.id) ? (
                   <FaBookmark className="text-yellow-400 h-5" />
                 ) : (
-                  <FaRegBookmark className="text-gray-400 h-5" />
+                  <FaRegBookmark className="text-gray-400 dark:text-gray-300 h-5" />
                 )}
               </button>
 
-              {/* FAVOURITE */}
+              {/* Favourite */}
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -165,7 +158,7 @@ export default function Top() {
                 {isFavourite(movie.id) ? (
                   <FaHeart className="text-red-500 h-5" />
                 ) : (
-                  <FaRegHeart className="text-gray-400 h-5" />
+                  <FaRegHeart className="text-gray-400 dark:text-gray-300 h-5" />
                 )}
               </button>
             </div>
@@ -173,5 +166,5 @@ export default function Top() {
         ))}
       </div>
     </div>
-  );
+      );
 }  
