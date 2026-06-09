@@ -1,8 +1,10 @@
 import axios from "axios";
 
-// Use environment variable for backend URL
+// Baseline fallback matching to make sure development never breaks
+const BASE_URL = process.env.REACT_APP_BACKEND_URL || "https://movie-app-backend-5-dxa1.onrender.com//api";
+
 const API = axios.create({
-  baseURL: process.env.REACT_APP_BACKEND_URL,
+  baseURL: BASE_URL,
 });
 
 API.interceptors.request.use((req) => {

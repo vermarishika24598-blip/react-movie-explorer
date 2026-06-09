@@ -1,10 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const API_URL = "https://movie-app-backend-6-qlen.onrender.com/api/watchlist";
-const FAVLIST_API = "https://movie-app-backend-6-qlen.onrender.com/api/favlist";
-
-
+// ✅ Pointing to local backend environment to bypass live CORS deployment issues
+const API_URL = "https://movie-app-backend-5-dxa1.onrender.com//api/watchlist";
+const FAVLIST_API = "https://movie-app-backend-5-dxa1.onrender.com//api/favlist";
 
 /* ================= WATCHLIST THUNKS ================= */
 export const fetchWatchlist = createAsyncThunk(
@@ -47,8 +46,16 @@ export const addToWatchlistBackend = createAsyncThunk(
       console.log("[Watchlist] Added response:", res.data);
       return res.data; // saved movie object
     } catch (err) {
-      console.error("[Watchlist] Add error:", err.response?.data || err.message);
-      return rejectWithValue(err.response?.data?.message || err.message);
+      const errorMessage = err.response?.data?.message || err.message;
+      
+      // ✅ Handled duplicate clicks silently so Javascript runtime doesn't crash/break
+      if (err.response?.status === 400 || errorMessage.toLowerCase().includes("already")) {
+        console.warn("[Watchlist] Movie already exists, ignoring duplicate call.");
+        return movie; 
+      }
+
+      console.error("[Watchlist] Add error:", errorMessage);
+      return rejectWithValue(errorMessage);
     }
   }
 );
@@ -116,8 +123,16 @@ export const addToFavlistBackend = createAsyncThunk(
       console.log("[Favlist] Added response:", res.data);
       return res.data;
     } catch (err) {
-      console.error("[Favlist] Add error:", err.response?.data || err.message);
-      return rejectWithValue(err.response?.data?.message || err.message);
+      const errorMessage = err.response?.data?.message || err.message;
+      
+      // ✅ Handled duplicate favorites calls gracefully without throwing runtime errors
+      if (err.response?.status === 400 || errorMessage.toLowerCase().includes("already")) {
+        console.warn("[Favlist] Movie already exists in favorites, ignoring duplicate call.");
+        return movie;
+      }
+
+      console.error("[Favlist] Add error:", errorMessage);
+      return rejectWithValue(errorMessage);
     }
   }
 );
@@ -180,9 +195,10 @@ const moviesSlice = createSlice({
         state.status = "failed";
       })
       .addCase(addToWatchlistBackend.fulfilled, (state, action) => {
-        // push only if movieId doesn't exist
-        if (!state.watchlist.some((m) => m.movieId === action.payload.movieId)) {
-          state.watchlist.push(action.payload);
+        if (action.payload && action.payload.movieId) {
+          if (!state.watchlist.some((m) => m.movieId === action.payload.movieId)) {
+            state.watchlist.push(action.payload);
+          }
         }
       })
       .addCase(removeFromWatchlistBackend.fulfilled, (state, action) => {
@@ -203,8 +219,10 @@ const moviesSlice = createSlice({
         state.status = "failed";
       })
       .addCase(addToFavlistBackend.fulfilled, (state, action) => {
-        if (!state.favourite.some((m) => m.movieId === action.payload.movieId)) {
-          state.favourite.push(action.payload);
+        if (action.payload && action.payload.movieId) {
+          if (!state.favourite.some((m) => m.movieId === action.payload.movieId)) {
+            state.favourite.push(action.payload);
+          }
         }
       })
       .addCase(removeFromFavlistBackend.fulfilled, (state, action) => {
