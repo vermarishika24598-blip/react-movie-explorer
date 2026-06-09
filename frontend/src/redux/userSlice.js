@@ -1,5 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
+// ✅ Directly pointing to your new stable live Render backend
+const BASE_URL = "https://movie-app-backend-5-dxa1.onrender.com";
+
 // Async thunk to fetch user info
 export const fetchUser = createAsyncThunk(
   "user/fetchUser",
@@ -8,7 +11,8 @@ export const fetchUser = createAsyncThunk(
       const token = localStorage.getItem("token");
       if (!token) throw new Error("No token found");
 
-      const res = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/auth/me`, {
+      // Removed process.env dependency to avoid double-slash or empty string bugs
+      const res = await fetch(`${BASE_URL}/api/auth/me`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -29,7 +33,7 @@ export const updateUserBackend = createAsyncThunk(
       const token = localStorage.getItem("token");
       if (!token) throw new Error("No token found");
 
-      const res = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/auth/me`, {
+      const res = await fetch(`${BASE_URL}/api/auth/me`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -71,8 +75,8 @@ try {
 const storedToken = localStorage.getItem("token") || null;
 
 const initialState = {
-  profile: null,
-  token: localStorage.getItem("token"),
+  profile: storedUser, // Fixed: Using correctly parsed storedUser instead of null on fresh reload
+  token: storedToken,
   loading: false,
   error: null,
 };
@@ -89,12 +93,12 @@ const userSlice = createSlice({
       localStorage.setItem("user", JSON.stringify(state.profile));
       localStorage.setItem("token", token);
     },
-   logout: (state) => {
-  state.profile = null;
-  state.token = null;
-  localStorage.removeItem("token");
-},
-
+    logout: (state) => {
+      state.profile = null;
+      state.token = null;
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+    },
   },
   extraReducers: (builder) => {
     builder
