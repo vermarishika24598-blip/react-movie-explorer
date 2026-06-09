@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 // ✅ Directly pointing to your new stable live Render backend
-const BASE_URL = "https://movie-app-backend-5-dxa1.onrender.com";
+const BASE_URL = "https://movie-app-backend-6-qlen.onrender.com";
 
 // Async thunk to fetch user info
 export const fetchUser = createAsyncThunk(

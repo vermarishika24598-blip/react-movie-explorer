@@ -2,8 +2,8 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 // ✅ Pointing to local backend environment to bypass live CORS deployment issues
-const API_URL = "https://movie-app-backend-6-qlen.onrender.com//api/watchlist";
-const FAVLIST_API = "https://movie-app-backend-6-qlen.onrender.com//api/favlist";
+const API_URL = "https://movie-app-backend-6-qlen.onrender.com/api/watchlist";
+const FAVLIST_API = "https://movie-app-backend-6-qlen.onrender.com/api/favlist";
 
 /* ================= WATCHLIST THUNKS ================= */
 export const fetchWatchlist = createAsyncThunk(
