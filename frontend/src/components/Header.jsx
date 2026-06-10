@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
-import { AiFillHeart, AiOutlineClose, AiOutlineHeart } from "react-icons/ai";
-import { BsBookmarkFill, BsBookmark } from "react-icons/bs";
+import { AiOutlineClose, AiFillStar } from "react-icons/ai";
 import { FaUser } from "react-icons/fa";
 import { FiLogOut, FiSearch } from "react-icons/fi";
 
@@ -42,22 +41,19 @@ function Header({ user, setUser }) {
   };
 
   return (
-    <div className="w-full bg-neutral-900 border-b border-neutral-800 text-gray-200 sticky top-0 z-50 shadow-xl">
+    <div className="w-full bg-neutral-900 border-b border-neutral-800 text-gray-200 sticky top-0 z-[100] shadow-2xl">
       <Toaster position="bottom-right" />
 
-      {/* Main Container */}
       <div className="max-w-7xl mx-auto p-3 flex flex-col gap-3">
-        
         {/* Row 1: Logo, Search, Auth */}
         <div className="flex items-center justify-between gap-3">
-          {/* Logo */}
-          <Link to="/" className="bg-amber-500 text-black px-3 py-1.5 rounded-lg font-black text-sm flex-shrink-0 hover:bg-amber-400 transition-all">
+          <Link to="/" className="bg-amber-500 text-black px-4 py-1.5 rounded-lg font-black text-sm tracking-tight hover:bg-amber-400 transition-all">
             IMDb
           </Link>
 
-          {/* Search Bar */}
-          <div className="flex-1 relative group max-w-sm" ref={searchRef}>
-            <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500 group-focus-within:text-amber-400" size={16} />
+          {/* Search Bar with Premium Dropdown */}
+          <div className="flex-1 relative max-w-sm" ref={searchRef}>
+            <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500" size={16} />
             <input
               type="text"
               className="w-full rounded-xl pl-9 pr-8 py-2 text-xs bg-neutral-950 border border-neutral-800 focus:border-amber-500 outline-none transition-all"
@@ -71,31 +67,51 @@ function Header({ user, setUser }) {
               </button>
             )}
 
-            {/* Mobile-Friendly Dropdown */}
+            {/* Premium Search Results */}
             {!loading && searchText && movies.length > 0 && (
-              <div className="absolute left-0 right-0 top-full mt-2 max-h-[300px] overflow-y-auto bg-neutral-900 border border-neutral-800 rounded-xl shadow-2xl z-50">
-                {movies.slice(0, 5).map((movie) => (
-                  <Link key={movie.id} to={`/movie/${movie.id}`} onClick={() => setSearchText("")} className="flex items-center gap-3 p-2 hover:bg-neutral-800">
-                    <img src={movie.poster_path ? `https://image.tmdb.org/t/p/w92${movie.poster_path}` : "https://via.placeholder.com/92x138"} alt={movie.title} className="w-10 h-14 rounded object-cover" />
-                    <div className="flex-grow truncate">
-                      <h4 className="text-xs font-bold truncate">{movie.title}</h4>
-                      <p className="text-[10px] text-neutral-400">{movie.release_date?.split("-")[0]}</p>
-                    </div>
-                  </Link>
-                ))}
+              <div className="absolute left-0 right-0 top-full mt-3 max-h-[450px] bg-neutral-900/95 backdrop-blur-2xl border border-neutral-700/50 rounded-2xl shadow-2xl z-[100] overflow-hidden flex flex-col">
+                <div className="overflow-y-auto custom-scrollbar">
+                  {movies.slice(0, 6).map((movie) => (
+                    <Link
+                      key={movie.id}
+                      to={`/movie/${movie.id}`}
+                      onClick={() => setSearchText("")}
+                      className="flex items-center gap-4 p-3 hover:bg-neutral-800/50 transition-all group border-b border-neutral-800/50"
+                    >
+                      <div className="w-12 h-16 rounded-lg overflow-hidden flex-shrink-0 shadow-lg ring-1 ring-white/10">
+                        <img
+                          src={movie.poster_path ? `https://image.tmdb.org/t/p/w200${movie.poster_path}` : "https://via.placeholder.com/200x300"}
+                          alt={movie.title}
+                          className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-500"
+                        />
+                      </div>
+                      <div className="flex-grow min-w-0">
+                        <h4 className="font-bold text-gray-100 text-sm group-hover:text-amber-400 truncate">{movie.title}</h4>
+                        <div className="flex items-center gap-2 text-[10px] text-neutral-400 mt-0.5">
+                          <span>{movie.release_date?.split("-")[0]}</span>
+                          <span className="flex items-center gap-0.5 text-amber-500"><AiFillStar size={10} /> {movie.vote_average?.toFixed(1)}</span>
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+                <div className="p-2 border-t border-neutral-800 bg-neutral-950/50 flex justify-between items-center text-[10px] text-neutral-500">
+                  <span>{movies.length} results</span>
+                  <button onClick={() => setSearchText("")} className="hover:text-red-400 underline">Clear</button>
+                </div>
               </div>
             )}
           </div>
 
-          {/* Auth Section */}
+          {/* Auth */}
           <div className="flex items-center gap-2">
             {!isAuthenticated ? (
               <Link to="/login" className="px-3 py-1.5 text-xs font-bold rounded-lg border border-neutral-700 bg-neutral-800 hover:bg-neutral-700 transition">
                 Sign In
               </Link>
             ) : (
-              <div className="flex items-center gap-2">
-                <Link to="/profile" className="hidden sm:flex text-xs font-medium text-amber-400">Profile</Link>
+              <div className="flex items-center gap-3">
+                <Link to="/profile" className="hidden sm:block text-xs font-medium text-amber-400">Profile</Link>
                 <button onClick={handleLogout} className="text-red-400 hover:text-red-300">
                   <FiLogOut size={18} />
                 </button>
@@ -104,7 +120,7 @@ function Header({ user, setUser }) {
           </div>
         </div>
 
-        {/* Row 2: Navigation Links (Scrollable on Mobile) */}
+        {/* Row 2: Nav */}
         <nav className="flex items-center gap-4 overflow-x-auto scrollbar-hide text-[11px] sm:text-sm font-medium border-t border-neutral-800 pt-2">
           <Link to="/popular" className="whitespace-nowrap hover:text-amber-400 transition">Popular</Link>
           <Link to="/top-rated" className="whitespace-nowrap hover:text-amber-400 transition">Top Rated</Link>
