@@ -17,6 +17,7 @@ export default function MovieDetails() {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [trailer, setTrailer] = useState(null);
   const dispatch = useDispatch();
   const { favourite = [], watchlist = [] } = useSelector(
     (state) => state.movies || {}
@@ -31,6 +32,23 @@ export default function MovieDetails() {
         );
         const data = await res.json();
         setMovie(data);
+
+
+        // Trailer Fetch
+      const trailerRes = await fetch(
+        `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${API_KEY}`
+      );
+
+      const trailerData = await trailerRes.json();
+
+      const officialTrailer = trailerData.results.find(
+        (video) =>
+          video.site === "YouTube" &&
+          video.type === "Trailer"
+      );
+
+      setTrailer(officialTrailer || null);
+
       } catch (err) {
         console.error(err);
       } finally {
@@ -213,6 +231,17 @@ export default function MovieDetails() {
                 </>
               )}
             </button>
+
+            {trailer && (
+  <a
+    href={`https://www.youtube.com/watch?v=${trailer.key}`}
+    target="_blank"
+    rel="noreferrer"
+    className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold bg-black hover:bg-gray-700 transition-all duration-200 shadow-lg text-white"
+  >
+    ▶ Watch Trailer
+  </a>
+)}
 
           </div>
 

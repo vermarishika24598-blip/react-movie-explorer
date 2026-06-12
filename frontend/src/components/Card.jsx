@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import trendingmovies from "./utils/Carddata";
-
+const API_KEY =process.env.REACT_APP_TMDB_API_KEY || "3b17db81e34acbea80c6104012518ad8";
 export default function Card() {
   const [movies, setMovies] = useState([]);
   const [index, setIndex] = useState(0);
@@ -34,6 +34,38 @@ export default function Card() {
     e.preventDefault();
     setIndex((prev) => (prev + 1) % movies.length);
   };
+
+
+  const playTrailer = async (e, movieId) => {
+  e.preventDefault();
+  e.stopPropagation();
+
+  try {
+    const res = await fetch(
+      `https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${API_KEY}`
+    );
+
+    const data = await res.json();
+
+    const trailer = data.results.find(
+      (video) =>
+        video.site === "YouTube" &&
+        video.type === "Trailer"
+    );
+
+    if (trailer) {
+      window.open(
+        `https://www.youtube.com/watch?v=${trailer.key}`,
+        "_blank"
+      );
+    } else {
+      alert("Trailer not available");
+    }
+  } catch (error) {
+    console.error(error);
+    alert("Failed to load trailer");
+  }
+};
 
   return (
     <div className="w-full overflow-hidden bg-neutral-950 relative group h-[380px] sm:h-[480px] md:h-[550px]">
@@ -82,6 +114,19 @@ export default function Card() {
                   </span>
                 </div>
               </div>
+
+              <button
+  onClick={(e) => playTrailer(e, movie.id)}
+  className="absolute right-6 md:right-16 bottom-16 md:bottom-20 z-20 
+               w-14 h-14 md:w-16 md:h-16 rounded-full 
+               bg-white/10 backdrop-blur-md border border-white/20 
+               text-white flex items-center justify-center 
+               shadow-[0_8px_32px_rgba(0,0,0,0.4)] transition-all duration-300 
+               hover:scale-110 hover:bg-black hover:border-red-500 active:scale-95"
+  
+>
+  ▶
+</button>
             </Link>
           </div>
         ))}
